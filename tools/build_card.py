@@ -27,7 +27,7 @@ ASCII_SRC_LIGHT = ROOT / "assets" / "ascii-art-light.txt"
 STATS_SRC = ROOT / "cache" / "stats.json"
 COLORS_SRC = ROOT / "assets" / "ascii-colors.json"
 
-BIRTHDATE = dt.date(2001, 4, 13)
+BIRTHDATE = dt.date(2011, 4, 13)
 
 # --- Type metrics -----------------------------------------------------------
 # Consolas advances 0.55em per glyph; the generic monospace fallback advances
@@ -87,7 +87,7 @@ INFO = [
     None,
     ("Languages.Programming", "JavaScript, Python, Swift"),
     ("Languages.Computer", "HTML, CSS, SQL"),
-    ("Languages.Real", "English"),
+    ("Languages.Real", "English, Spanish, Hindi, Odia"),
     None,
     ("Focus.Web", "Web Dev, Browsers, Extensions"),
     ("Focus.Security", "Exploiting"),
@@ -100,7 +100,7 @@ INFO = [
 CONTACT = [
     ("Email", "brunegamingyt@gmail.com"),
     ("Portfolio", "brunecoding.github.io"),
-    ("LinkedIn", "Shyun"),
+    ("LinkedIn", "none :sob:"),
     ("Discord", "bruneyt_83721"),
     ("YouTube", "@brunegaming"),
     ("CodePen", "BruneCoding"),
