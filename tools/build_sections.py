@@ -50,10 +50,10 @@ TITLES = {
 # (slug, label, url, accent, row). The label is all the button says.
 PROJECTS = (
     ("arborultra", "ARBOR ULTRA!", "https://greasyfork.org/en/scripts/600113-1-9-arbor-%F0%9D%96%80%F0%9D%93%9B%F0%9D%93%A3%E2%84%9B%F0%9D%93%90", "key", 0),
-    ("raybrowser", "RAY BROWSER", "https://raybrowser.com", "value", 0),
+    ("raybrowser", "RAY BROWSER", "https://brunecoding.github.io/Ray-Browser/Codebase/index.html", "value", 0),
     ("brunglebrowser", "BRUNGLE BROWSER", "https://brungle.pages.dev", "coral", 0),
-    ("brunglestudio", "BRUNGLE STUDIO", "https://studio-brungle.pages.dev", "key", 1),
-    ("bloxdtrailer", "BLOXD.IO TRAILER", "https://bloxd.io", "value", 1),
+    ("brunglestudio", "BRUNGLE STUDIO", "https://brunecoding.github.io/Brungle-AI-Studio/Codebase/Mainbase/main.html", "key", 1),
+    ("bloxdtrailer", "BLOXD.IO TRAILER", "https://drive.google.com/file/d/1fvE1s8JKwhEYwi2T2MUYJtDti9Kij-KV/view?usp=sharing", "value", 1),
 )
 
 PLACEHOLDER = """
