@@ -1,0 +1,90 @@
+# Refreshes everything on the profile that is generated:
+#   - the neofetch-style card (dark_mode.svg / light_mode.svg) and its GitHub stats
+#   - the Pac-Man contribution board and the link buttons
+#   - the pixel section headers and project buttons (embeds any <slug>.png icons you add)
+#   - today's moon phase (assets/art/moon.svg), redrawn every day
+#
+# The animated pictures (assets/art/hobbies.gif, seedfinder.gif, orbit.gif) are
+# built by hand with `python tools/build_ascii.py all` and committed; they never change.
+#
+# STATS: add a repository secret called STATS_TOKEN (a personal access token with
+# read:user, plus repo if you want private repos counted). Without it the built-in
+# token is used and GitHub often refuses it user-level queries -- the log of the
+# "Fetch GitHub stats" step lists which figures fell back and why.
+name: Update Profile Card
+
+on:
+  schedule:
+    - cron: "0 5 * * *"
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "assets/**"
+      - "tools/**"
+      - "*.png"
+      - ".github/workflows/profile-card.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: profile-card
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clone repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: pip install requests pillow numpy
+
+      # Never fails the run: partial stats are better than a stale card.
+      - name: Fetch GitHub stats
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.STATS_TOKEN || secrets.GITHUB_TOKEN }}
+          GH_LOGIN: ${{ github.repository_owner }}
+        run: python tools/fetch_stats.py
+
+      - name: Rebuild the card
+        run: python tools/build_card.py
+
+      - name: Rebuild the Pac-Man board
+        run: python tools/build_pacman.py
+
+      - name: Rebuild the link buttons
+        run: python tools/build_links.py
+
+      - name: Rebuild section headers and project buttons
+        run: python tools/build_sections.py
+
+      - name: Redraw today's moon
+        continue-on-error: true
+        run: python tools/build_ascii.py moon
+
+      - name: Rebase onto any commits that landed meanwhile
+        run: git pull --rebase --autostash origin main
+
+      - name: Commit the regenerated files
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: refresh profile card, buttons and moon"
+          branch: main
+          file_pattern: "*.svg cache/*.json projects/*.svg assets/art/moon.svg"
